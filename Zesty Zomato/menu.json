@@ -1,1 +1,8 @@
-{}
+{
+  "005": {
+    "dish_name": "Patha ka Ghost",
+    "dish_price": "350",
+    "dish_availability": true,
+    "stock": "5"
+  }
+}
