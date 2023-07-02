@@ -87,7 +87,9 @@ def display_menu(menu_data):
         row = [dish, details["dish_name"], details["dish_price"], details["dish_availability"]]
         table.append(row)
     headers = ["Dish ID","Name","Price","Availability"]
-    print(tabulate(table, headers, tablefmt="grid"))
+    table_formatted = tabulate(table, headers, tablefmt="grid")
+    colored_table = "\033[36m" + table_formatted + "\033[0m"  # Cyan color
+    print(colored_table)
 
 # Function to take an order from a customer
 def take_order():
@@ -135,7 +137,9 @@ def all_orders():
         row = [order_id, order_details["customer_name"], ", ".join(order_details["dishes"]), order_details["status"]]
         table.append(row)
     headers = ["Order ID", "Customer Name", "Dishes", "Status"]
-    print(tabulate(table, headers, tablefmt="grid"))
+    table_formatted = tabulate(table, headers, tablefmt="grid")
+    colored_table = "\033[35m" + table_formatted + "\033[0m"  # Magenta color
+    print(colored_table)
 
 # user's input
 while True:
