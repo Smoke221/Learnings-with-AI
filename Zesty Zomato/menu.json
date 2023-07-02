@@ -1,8 +1,20 @@
 {
-  "005": {
-    "dish_name": "Patha ka Ghost",
-    "dish_price": "350",
+  "002": {
+    "dish_name": "Chicken Dum Biryani",
+    "dish_price": "200",
     "dish_availability": true,
-    "stock": "5"
+    "stock": "8"
+  },
+  "003": {
+    "dish_name": "Apricot Delight",
+    "dish_price": "150",
+    "dish_availability": true,
+    "stock": "4"
+  },
+  "005": {
+    "dish_name": "Pathar ka Ghost",
+    "dish_price": "350",
+    "dish_availability": false,
+    "stock": "N/A"
   }
 }

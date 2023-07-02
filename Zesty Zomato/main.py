@@ -12,9 +12,10 @@ def save_menu_to_file():
 
 # Function to load the menu from menu.json
 def load_menu_from_file():
+    global menu
     with open('menu.json', 'r') as file:
-        menu_data = json.load(file)
-    return menu_data
+        menu = json.load(file)
+    return menu
 
 # Function to save the orders to a file
 def save_orders_to_file():
@@ -76,7 +77,7 @@ def update_dish():
 
         save_menu_to_file()
         menu.clear()
-        menu.update(menu_data) 
+        menu.update(menu_data)
         print("Dish availability updated successfully.")
     else:
         print("The dish is not found in the menu.")
@@ -84,9 +85,10 @@ def update_dish():
 def display_menu(menu_data):
     table = []
     for dish, details in menu_data.items():
-        row = [dish, details["dish_name"], details["dish_price"], details["dish_availability"]]
+        availability = "yes" if details["dish_availability"] else "no"
+        row = [dish, details["dish_name"], details["dish_price"], availability, details["stock"]]
         table.append(row)
-    headers = ["Dish ID","Name","Price","Availability"]
+    headers = ["Dish ID", "Name", "Price", "Availability", "Stock"]
     table_formatted = tabulate(table, headers, tablefmt="grid")
     colored_table = "\033[36m" + table_formatted + "\033[0m"  # Cyan color
     print(colored_table)
@@ -95,7 +97,7 @@ def display_menu(menu_data):
 def take_order():
     global order_ID
     customer_name = input("Enter the customer's name: ")
-    dish_IDs = input("Enter the dish IDs (sperated by comma): ").split(",")
+    dish_IDs = input("Enter the dish IDs (separated by comma): ").split(",")
 
     order_dishes = []
     order_status = "received"
@@ -103,6 +105,8 @@ def take_order():
     for dish_ID in dish_IDs:
         if dish_ID in menu and menu[dish_ID]["dish_availability"]:
             order_dishes.append(menu[dish_ID]["dish_name"])
+            # Decrease stock for the dish
+            menu[dish_ID]["stock"] = str(int(menu[dish_ID]["stock"]) - 1)
         else:
             print(f"Dish with ID {dish_ID} is not available")
 
@@ -115,6 +119,7 @@ def take_order():
         }
         order_ID += 1
         save_orders_to_file()
+        save_menu_to_file()  # Save updated menu with decreased stock
         print("Order placed successfully.")
     else:
         print("No dishes available to place the order.")
