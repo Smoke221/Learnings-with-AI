@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Update Availability</h1>
+    <form action="/menu/update" method="post">
+        <label for="dish_id">Dish ID:</label>
+        <input type="text" id="dish_id" name="dish_id" required><br><br>
+        <label for="availability">Availability:</label>
+        <select id="availability" name="availability" required>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select><br><br>
+        <input type="submit" value="Update Availability">
+    </form>
+</body>
+</html>

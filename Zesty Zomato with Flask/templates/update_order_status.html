@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Update Order Status</h1>
+    <form action="/order/update/" method="post">
+        <label for="order_id">Order ID:</label>
+        <input type="number" id="order_id" name="order_id" required><br><br>
+        <label for="status">Status:</label>
+        <input type="text" id="status" name="status" required><br><br>
+        <input type="submit" value="Update Order Status">
+    </form>
+</body>
+</html>
