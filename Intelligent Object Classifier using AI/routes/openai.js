@@ -51,11 +51,11 @@ router.post("/", async (req, res) => {
       let prompt;
 
       if (objectName === "Holding a clip") {
-        prompt = `What can you do with a clothespin? //in the output please include the name of the object for example "You're holding a clothespin" in bold and in the next line followed by bullet points of what you can do with the object each in a new line`;
-      } else if (objectName === 'Holding a tooth brush //in the output please include the name of the object for example "You"re holding a tooth brush" in bold and in the next line followed by bullet points of what you can do with the object each in a new line') {
-        prompt = `What are the possible uses of a tooth brush?`;
+        prompt = `What can you do with a clothespin? n\ Need the output in a simple way like the name of the object should be the first line  for example "It's a objectName goes here" n\ Then explain what is objectName n\ Then all the uses of the object, keep it simple `;
+      } else if (objectName === "Holding a tooth brush") {
+        prompt = `What are the possible uses of a tooth brush? n\ Need the output in a simple way like the name of the object should be the first line  for example "It's a objectName goes here" n\ Then explain what is objectName n\ Then all the uses of the object, keep it simple`;
       } else if (objectName === "An apple") {
-        prompt = `Show me the nutritional values, possible uses, and country of origin of ${objectName}.`;
+        prompt = `First line of the output should be "It's a ${objectName}" n\ Then What is ${objectName} n\ Then show me the nutritional values, possible uses, and country of origin of ${objectName}.`;
       } else {
         // Handle any other cases here
         response = "Holding nothing or no object present";
@@ -63,7 +63,7 @@ router.post("/", async (req, res) => {
       if (prompt) {
         response = await generateCompletion(prompt);
       } else {
-        response = "Invalid object name.";
+        response = "Can't detect object.";
       }
     }
 
