@@ -51,8 +51,8 @@ router.post("/", async (req, res) => {
       let prompt;
 
       if (objectName === "Holding a clip") {
-        prompt = `What can you do with a clothespin?`;
-      } else if (objectName === "Holding a tooth brush") {
+        prompt = `What can you do with a clothespin? //in the output please include the name of the object for example "You're holding a clothespin" in bold and in the next line followed by bullet points of what you can do with the object each in a new line`;
+      } else if (objectName === 'Holding a tooth brush //in the output please include the name of the object for example "You"re holding a tooth brush" in bold and in the next line followed by bullet points of what you can do with the object each in a new line') {
         prompt = `What are the possible uses of a tooth brush?`;
       } else if (objectName === "An apple") {
         prompt = `Show me the nutritional values, possible uses, and country of origin of ${objectName}.`;
