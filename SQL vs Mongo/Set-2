@@ -1,0 +1,95 @@
+Problem: Create a Restaurants table / collection with the fields defined above.
+SQL: CREATE TABLE Restaurants (
+  id INT PRIMARY KEY,
+  name VARCHAR(255),
+  City VARCHAR(255),
+  Cuisine VARCHAR(255),
+  Rating DECIMAL(3, 2),
+  delivery_available BOOLEAN
+);
+Mongo: db.createCollection("Restaurants")
+
+Problem: Insert five rows / documents into the Restaurants table / collection with data of your choice.
+SQL: 
+INSERT INTO Restaurants (id, name, Cuisine, Rating, City)
+VALUES
+(1, Spice Junction, Indian, 4.5, Mumbai, TRUE)
+(2, Saffron Delight, Mughlai, 4.2, Delhi, FALSE)
+(3, Biryani Paradise, Hyderabadi, 4.8, Hyderabad, FALSE)
+(4, Masala Mantra, North Indian, 4.3, Bangalore, TRUE)
+(5, Coastal Spice, South Indian, 4.6, Chennai, TRUE)
+Mongo: 
+db.Restaurants.insertMany([
+  {
+    id: 1,
+    name: "Spice Junction",
+    Cuisine: "Indian",
+    Rating: 4.5,
+    City: "Mumbai",
+    delivery_available: true
+  },
+  {
+    id: 2,
+    name: "Saffron Delight",
+    Cuisine: "Mughlai",
+    Rating: 4.2,
+    City: "Delhi",
+    delivery_available: false
+  },
+  {
+    id: 3,
+    name: "Biryani Paradise",
+    Cuisine: "Hyderabadi",
+    Rating: 4.8,
+    City: "Hyderabad",
+    delivery_available: false
+  },
+  {
+    id: 4,
+    name: "Masala Mantra",
+    Cuisine: "North Indian",
+    Rating: 4.3,
+    City: "Bangalore",
+    delivery_available: true
+  },
+  {
+    id: 5,
+    name: "Coastal Spice",
+    Cuisine: "South Indian",
+    Rating: 4.6,
+    City: "Chennai",
+    delivery_available: true
+  }
+]);
+
+Problem: Write a query to fetch all restaurants, ordered by average_rating in descending order.
+SQL: SELECT * FROM Restaurants ORDER BY Rating DESC;
+Mongo: db.Restaurants.find().sort({ Rating: -1 });
+
+Write a query to fetch all restaurants that offer delivery_available and have an average_rating of more than 4.
+SQL: SELECT * FROM Restaurants WHERE delivery_available = 1 AND Rating > 4;
+Mongo: db.Restaurants.find({ delivery_available: true, Rating: { $gt: 4 } });
+
+Write a query to fetch all restaurants where the cuisine_type field is not set or is null.
+SQL: SELECT * FROM Restaurants WHERE Cuisine IS NULL OR Cuisine = '';
+Mongo: db.Restaurants.find({ $or: [{ Cuisine: null }, { Cuisine: "" }] });
+
+Problem: Write a query to count the number of restaurants that have delivery_available.
+SQL: SELECT COUNT(*) FROM Restaurants WHERE delivery_available = 1;
+Mongo: db.Restaurants.countDocuments({ delivery_available: true });
+
+Problem: Write a query to fetch all restaurants whose location contains 'New York'.
+SQL: SELECT * FROM Restaurants WHERE City LIKE '%New York%';
+Mongo: db.Restaurants.find({ City: /New York/ });
+
+Problem: Write a query to calculate the average average_rating of all restaurants.
+SQL: SELECT AVG(Rating) FROM Restaurants;
+Mongo: db.Restaurants.aggregate([{ $group: { _id: null, avg_rating: { $avg: "$Rating" } } }]);
+
+Problem: Write a query to fetch the top 5 restaurants when ordered by average_rating in descending order.
+SQL: SELECT * FROM Restaurants ORDER BY Rating DESC LIMIT 5;
+Mongo: db.Restaurants.find().sort({ Rating: -1 }).limit(5);
+
+Problem: Write a query to delete the restaurant with id 3.
+SQL: DELETE FROM Restaurants WHERE id = 3;
+Mongo: db.Restaurants.deleteOne({ id: 3 });
