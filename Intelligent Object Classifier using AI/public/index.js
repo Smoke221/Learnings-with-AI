@@ -64,7 +64,7 @@ async function predict() {
       const objectName = prediction[i].className; // Get the predicted object class
 
       // Make a POST request to the backend endpoint
-      fetch("http://localhost:3000/identify/", {
+      fetch("https://object-identifier-with-ai.onrender.com/identify/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
