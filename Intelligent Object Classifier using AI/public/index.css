@@ -1,0 +1,100 @@
+/* Custom CSS styles */
+body {
+  font-family: "Lato", sans-serif;
+  background-color: #f3f3f3;
+  margin: 0;
+  padding: 0;
+}
+
+.heading {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #333;
+  animation: fadeIn 1s ease-in-out;
+}
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+button {
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  animation: pulse 1s infinite;
+}
+
+button.start {
+  background-color: #4caf50;
+}
+
+button.stop {
+  background-color: #f44336;
+}
+
+button.start:hover {
+  background-color: #45a049;
+}
+
+button.stop:hover {
+  background-color: #d32f2f;
+}
+
+#webcam-container {
+  text-align: center;
+  margin: 20px 0;
+  animation: slideIn 1s ease-in-out;
+}
+
+#label-container {
+  text-align: center;
+  font-size: 18px;
+  color: #333;
+  animation: slideIn 1s ease-in-out;
+}
+
+.response {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 20px;
+  color: #555;
+  animation: slideIn 1s ease-in-out;
+}
+
+/* Keyframe animations */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
