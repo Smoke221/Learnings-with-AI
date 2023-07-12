@@ -1,0 +1,115 @@
+Problem: Create a Customers table / collection with the following fields: id (unique identifier), name, email, address, and phone_number.
+SQL:
+ CREATE TABLE Customers (
+  id INT PRIMARY KEY,
+  name VARCHAR(255),
+  email VARCHAR(255),
+  address VARCHAR(255),
+  phone_number VARCHAR(20)
+);
+
+Mongo: db.createCollection("Customers");
+
+Problem: Insert five rows / documents into the Customers table / collection with data of your choice.
+SQL:
+INSERT INTO Customers (id, name, email, address, phone_number)
+VALUES (ID: 1, Name: Rajesh Kumar, Email: rajesh.kumar@example.com, Phone: +91 9876543210)
+
+INSERT INTO Customers (id, name, email, address, phone_number)
+VALUES (ID: 2, Name: Priya Sharma, Email: priya.sharma@example.com, Phone: +91 8765432109)
+
+INSERT INTO Customers (id, name, email, address, phone_number)
+VALUES (ID: 3, Name: Aman Verma, Email: aman.verma@example.com, Phone: +91 7654321098);
+
+INSERT INTO Customers (id, name, email, address, phone_number)
+VALUES (ID: 4, Name: Smita Patel, Email: smita.patel@example.com, Phone: +91 6543210987);
+
+INSERT INTO Customers (id, name, email, address, phone_number)
+VALUES (ID: 5, Name: Sanjay Singh, Email: sanjay.singh@example.com, Phone: +91 5432109876);
+
+Mongo:
+db.customers.insertMany([
+  {
+    id: 1,
+    name: 'Rajesh Kumar',
+    email: 'rajesh.kumar@example.com',
+    phone_number: '+91 9876543210'
+  },
+  {
+    id: 2,
+    name: 'Priya Sharma',
+    email: 'priya.sharma@example.com',
+    phone_number: '+91 8765432109'
+  },
+  {
+    id: 3,
+    name: 'Aman Verma',
+    email: 'aman.verma@example.com',
+    phone_number: '+91 7654321098'
+  },
+  {
+    id: 4,
+    name: 'Smita Patel',
+    email: 'smita.patel@example.com',
+    phone_number: '+91 6543210987'
+  },
+  {
+    id: 5,
+    name: 'Sanjay Singh',
+    email: 'sanjay.singh@example.com',
+    phone_number: '+91 5432109876'
+  }
+]);
+
+Problem: Write a query to fetch all data from the Customers table / collection.
+SQL: SELECT * FROM Customers;
+Mongo: db.customers.find({});
+
+Problem: Write a query to select only the name and email fields for all customers.
+SQL: SELECT name, email FROM Customers;
+Mongo: db.customers.find({}, { name: 1, email: 1, _id: 0 });
+
+Problem: Write a query to fetch the customer with the id of 3.
+SQL: SELECT * FROM Customers WHERE id = 3;
+Mongo: db.customers.find({ id: 3 });
+
+Problem: Write a query to fetch all customers whose name starts with 'A'.
+SQL: SELECT * FROM Customers WHERE name LIKE 'A%';
+Mongo: db.customers.find({ name: /^A/ }); -- Here ^ denotes the start of the string
+
+Problem: Write a query to fetch all customers, ordered by name in descending order.
+SQL: SELECT * FROM Customers ORDER BY name DESC;
+Mongo: db.customers.find().sort({ name: -1 });
+
+Problem: Write a query to update the address of the customer with id 4.
+SQL: UPDATE Customers SET address = 'New Address' WHERE id = 4;
+Mongo: db.customers.updateOne({ id: 4 }, { $set: { address: 'New Address' } });
+
+Problem: Write a query to fetch the top 3 customers when ordered by id in ascending order.
+SQL: SELECT * FROM Customers ORDER BY id ASC LIMIT 3;
+Mongo: db.customers.find().sort({ id: 1 }).limit(3);
+
+Problem: Write a query to delete the customer with id 2.
+SQL: DELETE FROM Customers WHERE id = 2;
+Mongo: db.customers.deleteOne({ id: 2 });
+
+Problem: Write a query to count the number of customers.
+SQL: SELECT COUNT(*) FROM Customers;
+Mongo: db.customers.countDocuments();
+
+Problem: Write a query to fetch all customers except the first two when ordered by id in ascending order.
+SQL: SELECT * FROM Customers ORDER BY id ASC OFFSET 2;
+Mongo: db.customers.find().sort({ id: 1 }).skip(2);
+
+Problem: Write a query to fetch all customers whose id is greater than 2 and name starts with 'B'.
+SQL: SELECT * FROM Customers WHERE id > 2 AND name LIKE 'B%';
+Mongo: db.customers.find({ $and: [{ id: { $gt: 2 } }, { name: /^B/ }] });
+
+Problem: Write a query to fetch all customers whose id is less than 3 or name ends with 's'.
+SQL: SELECT * FROM Customers WHERE id < 3 OR name LIKE '%s';
+Mongo: db.customers.find({ $or: [{ id: { $lt: 3 } }, { name: /s$/ }] });
+
+Problem: Write a query to fetch all customers where the phone_number field is not set or is null.
+SQL: SELECT * FROM Customers WHERE phone_number IS NULL OR phone_number = '';
+Mongo: db.customers.find({ $or: [{ phone_number: { $exists: false } }, { phone_number: null }] });
+
