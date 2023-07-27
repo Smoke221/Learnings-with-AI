@@ -2,22 +2,22 @@ Problem: Create a Restaurants table / collection with the fields defined above.
 SQL: CREATE TABLE Restaurants (
   id INT PRIMARY KEY,
   name VARCHAR(255),
-  City VARCHAR(255),
   Cuisine VARCHAR(255),
   Rating DECIMAL(3, 2),
+  City VARCHAR(255),
   delivery_available BOOLEAN
 );
 Mongo: db.createCollection("Restaurants")
 
 Problem: Insert five rows / documents into the Restaurants table / collection with data of your choice.
 SQL: 
-INSERT INTO Restaurants (id, name, Cuisine, Rating, City)
+INSERT INTO Restaurants (id, name, Cuisine, Rating, City, delivery_available)
 VALUES
-(1, Spice Junction, Indian, 4.5, Mumbai, TRUE)
-(2, Saffron Delight, Mughlai, 4.2, Delhi, FALSE)
-(3, Biryani Paradise, Hyderabadi, 4.8, Hyderabad, FALSE)
-(4, Masala Mantra, North Indian, 4.3, Bangalore, TRUE)
-(5, Coastal Spice, South Indian, 4.6, Chennai, TRUE)
+(1, "Spice Junction", "Indian", 4.5, "Mumbai", TRUE)
+(2, "Saffron Delight", "Mughlai", 4.2, "Delhi", FALSE)
+(3, "Biryani Paradise", "Hyderabadi", 4.8, "Hyderabad", FALSE)
+(4, "Masala Mantra", "North Indian", 4.3, "Bangalore", TRUE)
+(5, "Coastal Spice", "South Indian", 4.6, "Chennai", TRUE)
 Mongo: 
 db.Restaurants.insertMany([
   {

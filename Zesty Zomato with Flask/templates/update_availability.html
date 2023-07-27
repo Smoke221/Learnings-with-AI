@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Update Availability</h1>
-    <form action="/menu/update" method="post">
+    <form method="POST" action="http://localhost:5000/menu/update/{{ dish_id }}">
         <label for="dish_id">Dish ID:</label>
         <input type="text" id="dish_id" name="dish_id" required><br><br>
         <label for="availability">Availability:</label>

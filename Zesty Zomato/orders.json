@@ -1,1 +1,7 @@
-{"1": {"customer_name": "Krishna", "dishes": ["Chicken Dum Biryani"], "status": "received"}, "2": {"customer_name": "Shreya", "dishes": ["Apricot Delight", "Chicken Dum Biryani"], "status": "preparing"}}
+{
+  "1": {
+    "customer_name": "Shreya",
+    "dishes": ["Chicken Dum Biryani", "Apricot Delight"],
+    "status": "preparing"
+  }
+}

@@ -14,7 +14,29 @@
         <a href="update_order_status.html">Update an order status</a>
         <a href="review_orders.html">Orders</a>
     </nav>
-    <h1>Review Orders</h1>
-    <pre>{{ review }}</pre>
+    <h2>Review Orders</h2>
+{% if orders %}
+  <table>
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Customer Name</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+        <tr>
+          <td>{{ order['order_id'] }}</td>
+          <td>{{ order['customer_name'] }}</td>
+          <td>{{ order['status'] }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No orders placed yet.</p>
+{% endif %}
+
 </body>
 </html>

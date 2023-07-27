@@ -1,16 +1,20 @@
 from flask import Flask, request, render_template
+from pymongo import MongoClient
 
 app = Flask(__name__)
 
-menu = []
-orders = []
-order_id_counter = 1
+# MongoDB configuration
+client = MongoClient('mongodb://localhost:27017/')
+db = client['your_database_name']
+menu_collection = db['menu']
+orders_collection = db['orders']
 
 # Helper function to generate HTML code for displaying the menu
 def display_menu():
-    if len(menu) > 0:
+    menu_items = menu_collection.find()
+    if menu_items.count_documents({}) > 0:
         table_rows = ""
-        for dish in menu:
+        for dish in menu_items:
             table_rows += f"<tr><td>{dish['dish_id']}</td><td>{dish['name']}</td><td>{dish['price']}</td><td>{dish['availability']}</td></tr>"
         table_html = f"<table><thead><tr><th>Dish ID</th><th>Dish Name</th><th>Price</th><th>Availability</th></tr></thead><tbody>{table_rows}</tbody></table>"
         return f"<h2>Menu:</h2>{table_html}"
@@ -21,8 +25,8 @@ def display_menu():
 @app.route('/menu/add', methods=['GET', 'POST'])
 def add_dish():
     if request.method == 'POST':
-        dish = request.form
-        menu.append(dish)
+        dish = dict(request.form)
+        menu_collection.insert_one(dish)
         return display_menu()
     return render_template('add_dish.html')
 
@@ -30,11 +34,11 @@ def add_dish():
 @app.route('/menu/remove/<dish_id>', methods=['GET', 'POST'])
 def remove_dish(dish_id):
     if request.method == 'POST':
-        for dish in menu:
-            if dish['dish_id'] == dish_id:
-                menu.remove(dish)
-                return 'Dish removed successfully.'
-        return 'Dish not found.'
+        result = menu_collection.delete_one({'dish_id': dish_id})
+        if result.deleted_count > 0:
+            return 'Dish removed successfully.'
+        else:
+            return 'Dish not found.'
     return render_template('remove_dish.html')
 
 # Route for updating dish availability
@@ -42,13 +46,12 @@ def remove_dish(dish_id):
 def update_availability(dish_id):
     if request.method == 'POST':
         availability = request.form.get('availability')
-        for dish in menu:
-            if dish['dish_id'] == dish_id:
-                dish['availability'] = availability
-                return 'Availability updated successfully.'
-        return 'Dish not found.'
+        result = menu_collection.update_one({'dish_id': dish_id}, {'$set': {'availability': availability}})
+        if result.modified_count > 0:
+            return 'Availability updated successfully.'
+        else:
+            return 'Dish not found.'
     return render_template('update_availability.html')
-
 
 # Route for taking a new order
 @app.route('/orders/place', methods=['GET', 'POST'])
@@ -59,7 +62,7 @@ def place_order():
         ordered_dishes = []
 
         for dish_id in dish_ids:
-            dish = next((d for d in menu if d['dish_id'] == dish_id and d['availability'] == 'yes'), None)
+            dish = menu_collection.find_one({'dish_id': dish_id, 'availability': 'yes'})
             if dish:
                 ordered_dishes.append(dish)
             else:
@@ -71,34 +74,29 @@ def place_order():
             'dishes': ordered_dishes,
             'status': 'received'
         }
-        orders.append(order)
-        order_id_counter += 1
+        orders_collection.insert_one(order)
         return f"Order {order['order_id']} placed successfully."
     return render_template('place_order.html')
-
 
 # Route for updating order status
 @app.route('/orders/update/<order_id>', methods=['GET', 'POST'])
 def update_order_status(order_id):
     if request.method == 'POST':
         status = request.form.get('status')
-
-        order = next((o for o in orders if o['order_id'] == int(order_id)), None)
-        if order:
-            order['status'] = status
+        result = orders_collection.update_one({'order_id': int(order_id)}, {'$set': {'status': status}})
+        if result.modified_count > 0:
             return 'Order status updated successfully.'
         else:
             return 'Order not found.'
     return render_template('update_order_status.html')
 
-
 # Route for reviewing orders
 @app.route('/orders')
 def review_orders():
-    if len(orders) == 0:
+    orders = orders_collection.find()
+    if orders.count() == 0:
         return 'No orders placed yet.'
-
-    return render_template('review_orders.html', review=orders)
+    return render_template('review_orders.html', orders=orders)
 
 
 if __name__ == '__main__':
